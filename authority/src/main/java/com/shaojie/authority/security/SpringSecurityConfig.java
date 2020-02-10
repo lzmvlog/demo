@@ -1,19 +1,20 @@
 package com.shaojie.authority.security;
 
-import com.shaojie.authority.filter.VerificationCodeFilter;
 import com.shaojie.authority.model.Purview;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -60,6 +61,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     public PurviewServiceImpl purviewService;
+
+    @Autowired
+    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
+
+   // @Autowired
+//    private AuthenticationProvider authenticationProvider;
+    //private MyAuthenticationProvider myAuthenticationProvider;
 
     /**
      * 授权
@@ -130,6 +138,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 基于 数据库验证
         auth.userDetailsService(userDetailsService());
+//        auth.authenticationProvider(myAuthenticationProvider);
     }
 
     /**
@@ -170,8 +179,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 // 处理登录请求的 地址
                 .loginProcessingUrl("/index")
+                .authenticationDetailsSource(myWebAuthenticationDetailsSource)
                 // 定义 故障处理器
-                // .failureHandler()
+//                 .failureHandler()
                 // 修改 spring 提供的 默认登陆参数
                 .usernameParameter("userName")
                 .passwordParameter("password")
@@ -183,8 +193,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 //添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
-                .addFilterBefore(new VerificationCodeFilter(),
-                        UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new VerificationCodeFilter(),
+//                        UsernamePasswordAuthenticationFilter.class)
                 // 禁用跨域的保护
                 .csrf().disable();
     }
