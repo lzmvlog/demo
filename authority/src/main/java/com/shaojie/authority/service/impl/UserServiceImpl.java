@@ -4,6 +4,7 @@ import com.shaojie.authority.dao.UserRepository;
 import com.shaojie.authority.model.User;
 import com.shaojie.authority.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User findUserByName(String name) {
-        return userRepository.findUserByName(name);
+        Example<User> example = Example.of(new User()
+                .setName(name)
+                .setEnable(true));
+        return userRepository.findOne(example).get();
     }
 }

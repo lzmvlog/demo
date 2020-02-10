@@ -11,7 +11,7 @@
  Target Server Version : 50556
  File Encoding         : 65001
 
- Date: 08/02/2020 20:07:01
+ Date: 10/02/2020 16:44:22
 */
 
 SET NAMES utf8mb4;
@@ -34,6 +34,25 @@ CREATE TABLE `authority`  (
 INSERT INTO `authority` VALUES (1, 'PRODUCT_ADD', 1);
 INSERT INTO `authority` VALUES (2, 'PRODUCT_LIST', 1);
 INSERT INTO `authority` VALUES (3, 'PRODUCT_UPDATE', 1);
+
+-- ----------------------------
+-- Table structure for purview
+-- ----------------------------
+DROP TABLE IF EXISTS `purview`;
+CREATE TABLE `purview`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `authority` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of purview
+-- ----------------------------
+INSERT INTO `purview` VALUES (1, 'PRODUCT_ADD', '/product/add');
+INSERT INTO `purview` VALUES (2, 'PRODUCT_UPDATE', '/product/update');
+INSERT INTO `purview` VALUES (3, 'PRODUCT_LIST', '/product/list');
+INSERT INTO `purview` VALUES (4, 'PRODUCT_DELETE', '/product/delete');
 
 -- ----------------------------
 -- Table structure for user

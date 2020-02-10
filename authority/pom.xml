@@ -94,6 +94,12 @@
             <artifactId>hutool-all</artifactId>
             <version>5.1.2</version>
         </dependency>
+        <!--jpa-spec-->
+        <dependency>
+            <groupId>com.github.wenhao</groupId>
+            <artifactId>jpa-spec</artifactId>
+            <version>3.2.5</version>
+        </dependency>
     </dependencies>
 
     <build>

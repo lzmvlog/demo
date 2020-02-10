@@ -16,5 +16,4 @@ public interface UserService {
      * @return 用户信息
      */
     User findUserByName(String name);
-
 }
