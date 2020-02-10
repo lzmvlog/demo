@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: order
+server:
+  port: 8050
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8000/eureka

@@ -1,0 +1,17 @@
+<!--<!DOCTYPE mapper-->
+<!--        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.shaojie.jdbcauthority.dao.AuthoritiesMapper">-->
+
+<!--    &lt;!&ndash;这里就不用 resultMap 了 感觉意义也不是很大 (#^.^#)&ndash;&gt;-->
+<!--    <select id="getUserAuthorities" resultType="com.shaojie.jdbcauthority.model.Authorities">-->
+<!--        SELECT-->
+<!--            authorities.username,-->
+<!--            authorities.authority-->
+<!--        FROM-->
+<!--            authorities-->
+<!--        WHERE-->
+<!--            authorities.username = #{username}-->
+<!--    </select>-->
+
+<!--</mapper>-->

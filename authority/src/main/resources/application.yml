@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: authority
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/authority?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+    username: root
+    password: 5683
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+#    关闭缓存
+    cache: false
+  jpa:
+    database: mysql
+#    show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

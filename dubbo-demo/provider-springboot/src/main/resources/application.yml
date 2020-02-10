@@ -1,0 +1,28 @@
+server:
+  port: 8081
+
+dubbo:
+  application:
+    name: provider-springboot
+  registry:
+#    protocol: zookeeper
+#    address: 127.0.0.1
+#    port: 2181
+#    必须采用这种进行连接 否则可能存在不能连接上服务的可能
+    address: zookeeper://127.0.0.1:2181
+#    关闭注册中心启动时检查 (注册订阅失败时报错)：
+#    check: false
+  protocol:
+    name: dubbo
+    port: 20880
+#  调用服务超时时间
+  consumer:
+#    调用服务超时时间 默认超时时间为 1 s
+    timeout: 5000
+#    关闭所有服务的启动时检查 (没有提供者时报错)：
+    check: false
+#    重试次数
+#    retries: 2
+  monitor:
+    protocol: registry
+#    address: 127.0.0.1:7070
