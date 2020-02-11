@@ -1,9 +1,9 @@
 package com.shaojie.authority.controller;
 
-import com.google.code.kaptcha.Producer;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,21 +22,21 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
-    @Autowired
-    private Producer producer;
+    /*@Autowired
+    private Producer producer;*/
 
     @GetMapping("index")
-    public String index(){
+    public String index() {
         return "index";
     }
 
     @GetMapping("403")
-    public String error(){
+    public String error() {
         return "403";
     }
 
     @GetMapping("login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
@@ -48,6 +48,23 @@ public class MainController {
      */
     @GetMapping("captcha.jpg")
     public void getCaptcha(HttpServletRequest request, HttpServletResponse response) {
+        // 设置内容类型
+        response.setContentType("image/jpeg");
+        //定义图形验证码的长和宽
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        // 将验正码文本设置到 session 中
+        request.getSession().setAttribute("captcha", lineCaptcha.getCode());
+        BufferedImage image = lineCaptcha.getImage();
+        try {
+            @Cleanup ServletOutputStream outputStream = response.getOutputStream();
+            // 将图片验证码数据写到响应的输出流
+            ImageIO.write(image, "jpg", outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /* 已抛弃 GitHub 提示存在安全问题
+
         // 设置内容类型
         response.setContentType("image/jpeg");
         // 创建验正码文本
@@ -64,6 +81,9 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        */
+
     }
 
 }

@@ -1,17 +1,11 @@
 package com.shaojie.authority.config;
 
-import com.google.code.kaptcha.Producer;
-import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.google.code.kaptcha.util.Config;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
-import java.util.Properties;
 
 /**
  * @author： ShaoJie
  * @data： 2020年02月08日 20:02
- * @Description： 配置
+ * @Description： 配置图形验证码 已抛弃 GitHub 提示存在安全问题
  */
 @Component
 public class AuthorityConfiguration {
@@ -21,7 +15,7 @@ public class AuthorityConfiguration {
      *
      * @return 图形创建者
      */
-    @Bean
+    /*@Bean
     public Producer captcha() {
         // 配置 图形眼正码的基本参数
         Properties properties = new Properties();
@@ -38,6 +32,6 @@ public class AuthorityConfiguration {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
-    }
+    }*/
 
 }

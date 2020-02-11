@@ -3,6 +3,7 @@ package com.shaojie.authority.security;
 import com.shaojie.authority.model.Purview;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
@@ -65,9 +66,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
 
-   // @Autowired
+//    @Autowired
 //    private AuthenticationProvider authenticationProvider;
-    //private MyAuthenticationProvider myAuthenticationProvider;
+    @Qualifier
+    private MyAuthenticationProvider myAuthenticationProvider;
 
     /**
      * 授权
@@ -137,7 +139,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .passwordEncoder(passwordEncoder());
 
         // 基于 数据库验证
-        auth.userDetailsService(userDetailsService());
+//        auth.userDetailsService(userDetailsService());
+        auth.authenticationProvider(new MyAuthenticationProvider(userDetailsService, passwordEncoder()));
 //        auth.authenticationProvider(myAuthenticationProvider);
     }
 
