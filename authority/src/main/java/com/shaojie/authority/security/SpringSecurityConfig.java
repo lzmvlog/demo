@@ -3,7 +3,6 @@ package com.shaojie.authority.security;
 import com.shaojie.authority.model.Purview;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
@@ -14,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -68,8 +68,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
 //    private AuthenticationProvider authenticationProvider;
-    @Qualifier
-    private MyAuthenticationProvider myAuthenticationProvider;
+//    @Qualifier
+//    private MyAuthenticationProvider myAuthenticationProvider;
+    /*@Bean
+    public MyAuthenticationProvider myAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder){
+        return new MyAuthenticationProvider(this.userDetailsService,this.passwordEncoder());
+    }*/
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher(){
+        return new HttpSessionEventPublisher();
+    }
+
 
     /**
      * 授权
@@ -194,6 +204,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 开启登出
                 .logout()
+                .and()
+                // 会话管理
+                .sessionManagement()
+                // 设置最大的会话数
+                .maximumSessions(1)
+                // 阻止 新会话登录 默认为 false
+                .maxSessionsPreventsLogin(true)
+                .and()
+                // 防御固定的会话攻击的方式有四种：
+                // none() ：不做任何变动 ，登录之后沿用旧的 session
+                // newSession() ： 登录之后创建一个新的 session
+                // migrateSession() : 登录之后创建一个新的 session 并将旧的 session 中的数据复制过来
+                // changeSessionId() ： 不创建新的会话 而是使用由 servlet 容器提供的会话固定会话保护
+                .sessionFixation().none()
+                // 会话过期 跳转的 URl
+//                .invalidSessionUrl("/403")
+                // 自定义会话过期策略
+//                .invalidSessionStrategy(new MyInvalidSessionStrategy())
+                // 最大会话数
                 .and()
                 //添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
 //                .addFilterBefore(new VerificationCodeFilter(),

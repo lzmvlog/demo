@@ -1,5 +1,9 @@
 server:
   port: 8080
+#  设置 session 的过期时间
+#  servlet:
+#    session:
+#      timeout: PT30S
 spring:
   application:
     name: authority
