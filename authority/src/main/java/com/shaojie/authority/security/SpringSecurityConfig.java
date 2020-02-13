@@ -13,10 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -39,6 +38,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 用户信息服务
+     *
+     * @return
+     */
     @Bean
     public UserDetailsServiceImpl userDetailsService() {
         return new UserDetailsServiceImpl();
@@ -48,8 +52,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * 注入数据源
      * 数据源只在 jdbc 校验权限时才需要
      */
-    @Autowired
-    public DataSource dataSource;
+//    @Autowired
+//    public DataSource dataSource;
 
     /**
      * 用户详细信息 业务逻辑层
@@ -75,11 +79,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new MyAuthenticationProvider(this.userDetailsService,this.passwordEncoder());
     }*/
 
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher(){
-        return new HttpSessionEventPublisher();
-    }
+//    @Bean
+//    public HttpSessionEventPublisher httpSessionEventPublisher(){
+//        return new HttpSessionEventPublisher();
+//    }
 
+    @Autowired
+    private SpringSessionBackedSessionRegistry redisSessionRegistry;
 
     /**
      * 授权
@@ -211,6 +217,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .maximumSessions(1)
                 // 阻止 新会话登录 默认为 false
                 .maxSessionsPreventsLogin(true)
+                .sessionRegistry(redisSessionRegistry)
                 .and()
                 // 防御固定的会话攻击的方式有四种：
                 // none() ：不做任何变动 ，登录之后沿用旧的 session

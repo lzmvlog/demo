@@ -22,7 +22,14 @@ spring:
     open-in-view: true
     hibernate:
       ddl-auto: update
+#  redis
+#  redis:
+#    host: 120.78.189.213
+#    port: 6379
+#    password: 123456
+#    database: 0
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+
