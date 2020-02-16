@@ -23,11 +23,11 @@ spring:
     hibernate:
       ddl-auto: update
 #  redis
-  redis:
-    host: 120.78.189.213
-    port: 6379
-    password: 123456
-    database: 0
+#  redis:
+#    host: 120.78.189.213
+#    port: 6379
+#    password: 123456
+#    database: 0
 #   使用 redis 实现 session 共享
 #  session:
 #    redis:

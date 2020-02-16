@@ -13,8 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -234,11 +238,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .invalidSessionStrategy(new MyInvalidSessionStrategy())
                 // 最大会话数
                 .and()
-                //添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
+                // 添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
+                // 自定义实现 用户登录拦截
 //                .addFilterBefore(new VerificationCodeFilter(),
 //                        UsernamePasswordAuthenticationFilter.class)
-                // 禁用跨域的保护
-                .csrf().disable();
+                // 启用 CORS 支持
+                .cors()
+                .and()
+                .csrf();
+        // 禁用跨域的保护
+//                .disable();
     }
 
     /**
@@ -254,4 +263,27 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(purview.getUrl()).hasAnyAuthority(purview.getAuthority());
         }
     }
+
+    /**
+     * 配置 CORS 支持
+     * CORS 配置源 ------ 核心实现 DefaultCorsProcessor
+     *
+     * @return CORS 配置文件
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        // 允许从百度站点跨域 这里的参数是一个 List 集合 少量数据测试 不需要读取数据库了
+        corsConfiguration.setAllowedOrigins(Arrays.asList("https://www.baidu.com/"));
+        // 允许使用 GET POST 方法
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        // 允许携带凭证
+        corsConfiguration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+        // 对所有的 URL 生效
+        source.registerCorsConfiguration("/**",corsConfiguration);
+        return source;
+    }
+
 }
