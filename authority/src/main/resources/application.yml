@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 #  设置 session 的过期时间
 #  servlet:
 #    session:
@@ -23,11 +23,18 @@ spring:
     hibernate:
       ddl-auto: update
 #  redis
-#  redis:
-#    host: 120.78.189.213
-#    port: 6379
-#    password: 123456
-#    database: 0
+  redis:
+    host: 120.78.189.213
+    port: 6379
+    password: 123456
+    database: 0
+#   使用 redis 实现 session 共享
+#  session:
+#    redis:
+#      namespace: redis:session
+#      flush-mode: on_save
+#    store-type: redis
+#    timeout: 5m
 logging:
   level:
     org.hibernate.SQL: debug

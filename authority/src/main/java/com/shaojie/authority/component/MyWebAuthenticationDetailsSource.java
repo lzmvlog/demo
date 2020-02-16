@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
  * @Description：
  */
 @Component
-public class MyWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest , WebAuthenticationDetails> {
+public class MyWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {
 
     /**
      * 当类希望创建新的身份验证详细信息实例时由类调用。
+     *
      * @param context 请求对象，可以由身份验证详细信息使用
      * @return
      */

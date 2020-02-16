@@ -59,6 +59,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(@RequestParam String userName) {
         log.info("{ 当前登录的用户账号：  {} }", userName);
         User user = userService.findUserByName(userName);
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         // 权限集合 当前用户所具有的权限
         List<GrantedAuthority> authorityList = getUserAuthority(user.getId());
         if (user == null) {

@@ -16,11 +16,11 @@ public class ErrorPageConfig {
 
     // 使用 WebServerFactoryCustomizer 接口替换 EmbeddedServletContainerCustomizer 组件完成对嵌入式Servlet容器的配置
     @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer(){
+    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
         return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
             @Override
             public void customize(ConfigurableWebServerFactory factory) {
-                factory.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,"/403"));
+                factory.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
             }
         };
     }

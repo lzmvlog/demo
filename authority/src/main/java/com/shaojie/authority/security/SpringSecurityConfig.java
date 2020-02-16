@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,6 +24,7 @@ import java.util.List;
 @Configuration
 // 启动 SpringSecurity 的过滤器链
 @EnableWebSecurity
+//@EnableRedisHttpSession
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -84,8 +84,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new HttpSessionEventPublisher();
 //    }
 
-    @Autowired
-    private SpringSessionBackedSessionRegistry redisSessionRegistry;
+    /**
+     *
+     */
+//    @Autowired
+//    private SpringSessionBackedSessionRegistry redisSessionRegistry;
 
     /**
      * 授权
@@ -217,7 +220,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .maximumSessions(1)
                 // 阻止 新会话登录 默认为 false
                 .maxSessionsPreventsLogin(true)
-                .sessionRegistry(redisSessionRegistry)
+//                .sessionRegistry(redisSessionRegistry)
                 .and()
                 // 防御固定的会话攻击的方式有四种：
                 // none() ：不做任何变动 ，登录之后沿用旧的 session

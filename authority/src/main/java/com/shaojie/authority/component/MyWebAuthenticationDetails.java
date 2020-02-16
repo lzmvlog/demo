@@ -34,16 +34,16 @@ public class MyWebAuthenticationDetails extends WebAuthenticationDetails {
         super(request);
         // 后去验证表单的值 --> 图形验证码
         String captcha = request.getParameter("captcha");
-        log.info("表单的验证码captcha： {}",captcha);
+        log.info("表单的验证码captcha： {}", captcha);
         // 取出 访问时 已经添加在 session 中的验证码
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
-        log.info("session的验证码： {}",sessionCaptcha);
+        log.info("session的验证码： {}", sessionCaptcha);
         // 判断两次的值是否值一样的
         if (!StrUtil.isEmpty(sessionCaptcha)) {
             // 清楚当前的验证码 无论是否成功或是失败 客户端登录失败应刷新当前的验证码
             request.getSession().removeAttribute("captcha");
             // 当验证码正确 修改当前的状态
-            if (!StrUtil.isEmpty(captcha) && captcha.equals(sessionCaptcha)){
+            if (!StrUtil.isEmpty(captcha) && captcha.equals(sessionCaptcha)) {
                 this.imageCodeIsRight = true;
             }
         }
