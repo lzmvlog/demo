@@ -25,7 +25,7 @@ public class MyWebAuthenticationDetails extends WebAuthenticationDetails {
 
     /**
      * Records the remote address and will also set the session Id if a session already
-     * exists (it won't create one).
+     * exists (it won't create one). 保存会话
      * 补充用户提交的验证码和 session 保存的验证码
      *
      * @param request that the authentication request was received from

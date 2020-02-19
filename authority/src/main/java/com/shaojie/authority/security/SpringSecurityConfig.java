@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -163,6 +164,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 基于 数据库验证
 //        auth.userDetailsService(userDetailsService());
+        /**
+         * 根据传入的自定义{@link AuthenticationProvider}添加身份验证。
+         * 由于{@link AuthenticationProvider}实现是未知的，因此所有*自定义操作必须在外部完成，
+         * 并且{@link AuthenticationManagerBuilder} *会立即返回。
+         */
         auth.authenticationProvider(new MyAuthenticationProvider(userDetailsService, passwordEncoder()));
 //        auth.authenticationProvider(myAuthenticationProvider);
     }
@@ -245,7 +251,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 启用 CORS 支持
                 .cors()
                 .and()
-                .csrf();
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         // 禁用跨域的保护
 //                .disable();
     }

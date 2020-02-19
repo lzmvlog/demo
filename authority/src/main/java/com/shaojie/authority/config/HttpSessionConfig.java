@@ -9,6 +9,8 @@
 // * @author： ShaoJie
 // * @data： 2020年02月13日 18:12
 // * @Description： 使用 redis 实现 session 共享 解决当集群部署时 并发会话问题
+// *
+// * 暂时不适用该配置 适用正常浏览器保存 session
 // */
 //// @EnableRedisHttpSession 启用 基于redis 的 httpsession 实现
 ////@EnableRedisHttpSession

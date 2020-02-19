@@ -4,6 +4,7 @@ import com.shaojie.authority.component.MyWebAuthenticationDetails;
 import com.shaojie.authority.exception.VerificationCodeException;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
@@ -50,7 +51,7 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
      *
      * @param userDetails    用户信息
      * @param authentication 认证方式
-     * @throws AuthenticationException
+     * @throws AuthenticationException SneakyThrow 将避免javac坚持要求您捕获或向前抛出方法主体中语句声明它们生成的所有检查异常。
      */
     @SneakyThrows
     @Override
@@ -58,7 +59,7 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
                                                   UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         // getCredentials() 属于 authentication 通常用来获取主体的凭据 通常为用户的密码
         // 这里的自定义密码校验是 MyAuthenticationProvider 继承  AbstractUserDetailsAuthenticationProvider
-        /*if (authentication.getCredentials() == null) {
+        if (authentication.getCredentials() == null) {
             throw new BadCredentialsException(
                     this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
                             "密码不能为空"));
@@ -68,7 +69,7 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
                 this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials",
                         "密码错误");
             }
-        }*/
+        }
 
         // 当修改了继承的类 现在实现图形验证码的 自定义
         // 实现图片验证码的逻辑
@@ -78,7 +79,7 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
             throw new VerificationCodeException();
         }
         // 使用父类的方法完成密码验证
-        super.additionalAuthenticationChecks(userDetails, authentication);
+//        super.additionalAuthenticationChecks(userDetails, authentication);
     }
 
     /**
@@ -92,7 +93,7 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
      * @return
      * @throws AuthenticationException 认证异常
      */
-    /*@Override
+   /*@Override
     protected UserDetails retrieveUser(String username,
                                        UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         return userDetailsService.loadUserByUsername(username);
