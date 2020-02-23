@@ -1,38 +1,59 @@
 package com.shaojie.authority;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Date;
 
 /**
  * @author ShaoJie
  * @Date 2019年11月25 19:51
  * @Description:
  */
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AuthorityTest {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-
     @Test
     public void contextLoads() {
+        /*long now = System.currentTimeMillis();
+        long exp = now + 1000 * 30;//30秒过期
+        JwtBuilder builder = Jwts.builder()
+                // 设置唯一编号
+                .setId("888")
+                // 设置主题  可以是JSON数据
+                .setSubject("小白")
+                // 设置签发日期
+                .setIssuedAt(new Date())
+                // 设置角色
+                .claim("roles", "admin")
+                // 过期时间
+                .setExpiration(new Date(exp))
+                // 设置签名 使用HS256算法，并设置SecretKey(字符串)
+                .signWith(SignatureAlgorithm.HS256, "hahaha");
+        //构建 并返回一个字符串
+//        System.out.println();
+        String compactJwt = builder.compact();
+        Claims claims = Jwts.parser().setSigningKey("hahaha").parseClaimsJws(compactJwt).getBody();
+        System.out.println(claims);*/
 
-        System.out.println(passwordEncoder.matches("123456", "{bcrypt}$2a$10$LwAAIMgaW.K/chL97wm0UeqvnQYeC5pl4vup.fdQJOG08gJKu1oTi"));
-//        System.out.println(passwordEncoder().encode("123456"));
+        String token = Jwts.builder()
+//        主题 放入用户名
+                .setSubject("niceyoo")
+//        自定义属性 放入用户拥有请求权限
+                .claim("authorities","admin")
+//        失效时间
+                .setExpiration(new Date(System.currentTimeMillis() + 7 * 60 * 1000))
+//        签名算法和密钥
+                .signWith(SignatureAlgorithm.HS512, "tmax")
+                .compact();
+        log.info("token：{}",token);
     }
 
 }

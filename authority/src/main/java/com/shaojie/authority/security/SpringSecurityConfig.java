@@ -89,11 +89,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return new HttpSessionEventPublisher();
 //    }
 
-    /**
-     *
-     */
 //    @Autowired
 //    private SpringSessionBackedSessionRegistry redisSessionRegistry;
+
+//    @Autowired
+//    private DigestAuthenticationEntityPoint digestAuthenticationEntityPoint;
 
     /**
      * 授权
@@ -197,6 +197,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // permitAll 所有的权限都能访问
                 .antMatchers("/login").permitAll()
                 .antMatchers("/captcha.jpg").permitAll()
+                .antMatchers("/token").permitAll()
 //                .antMatchers("/**")
                 // fullyAuthenticated 不允许匿名用户查看
 //                .fullyAuthenticated()
@@ -289,8 +290,30 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
         // 对所有的 URL 生效
-        source.registerCorsConfiguration("/**",corsConfiguration);
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
+
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        //1.添加CORS配置信息
+//        CorsConfiguration config = new CorsConfiguration();
+//        //放行哪些原始域
+//        config.addAllowedOrigin("*");
+//        //是否发送Cookie信息
+//        config.setAllowCredentials(true);
+//        //放行哪些原始域(请求方式)
+//        config.addAllowedMethod("*");
+//        //放行哪些原始域(头部信息)
+//        config.addAllowedHeader("*");
+//        //暴漏刷新token的header
+//        config.addExposedHeader(AlipayAppletSecurityConstants.RFRESH_TOKEN_HEADER_NAME);
+//        //2.添加映射路径
+//        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+//        configSource.registerCorsConfiguration("/alipay-applet/**", config);
+//
+//        //3.返回新的CorsFilter.
+//        return new CorsFilter(configSource);
+//    }
 
 }

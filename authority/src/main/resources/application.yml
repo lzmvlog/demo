@@ -35,6 +35,12 @@ spring:
 #      flush-mode: on_save
 #    store-type: redis
 #    timeout: 5m
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: 127.0.0.1:8090/token
+#          jwk-set-uri:
 logging:
   level:
     org.hibernate.SQL: debug
