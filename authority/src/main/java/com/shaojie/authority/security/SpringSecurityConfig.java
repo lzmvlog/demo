@@ -1,5 +1,6 @@
 package com.shaojie.authority.security;
 
+import com.shaojie.authority.filter.RequestFilter;
 import com.shaojie.authority.model.Purview;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -75,6 +77,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
 
+    /**
+     * 请求拦截器
+     */
+//    @Autowired
+//    public RequestFilter requestFilter;
 //    @Autowired
 //    private AuthenticationProvider authenticationProvider;
 //    @Qualifier
@@ -197,7 +204,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // permitAll 所有的权限都能访问
                 .antMatchers("/login").permitAll()
                 .antMatchers("/captcha.jpg").permitAll()
-                .antMatchers("/token").permitAll()
 //                .antMatchers("/**")
                 // fullyAuthenticated 不允许匿名用户查看
 //                .fullyAuthenticated()
@@ -246,9 +252,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 最大会话数
                 .and()
                 // 添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
-                // 自定义实现 用户登录拦截
+                // 自定义实现 用户登录拦截 之前
 //                .addFilterBefore(new VerificationCodeFilter(),
 //                        UsernamePasswordAuthenticationFilter.class)
+                // 添加自定义的拦截器 在账号密码验证正确之后
+                .addFilterAfter(new RequestFilter(), UsernamePasswordAuthenticationFilter.class)
                 // 启用 CORS 支持
                 .cors()
                 .and()

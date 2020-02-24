@@ -2,9 +2,7 @@ package com.shaojie.authority.security;
 
 import com.shaojie.authority.component.MyWebAuthenticationDetails;
 import com.shaojie.authority.exception.VerificationCodeException;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.shaojie.authority.filter.RequestFilter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Date;
 
 /**
  * @author： ShaoJie
@@ -40,6 +36,9 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * 密码加密
+     */
     @Autowired
     public PasswordEncoder passwordEncoder;
 
@@ -47,6 +46,8 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
         this.setUserDetailsService(userDetailsService);
         this.setPasswordEncoder(passwordEncoder);
     }
+
+
 
     /**
      * 允许子类针对给定的身份验证请求对返回的（或缓存的）UserDetails 进行任何其他检查。
@@ -82,33 +83,6 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
         if (!details.getImageCodeIsRight()) {
             throw new VerificationCodeException();
         }
-
-        // --------------------------
-        // 以下 全是 jwt 生成 token
-        // 签名算法
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-//        SecretKey secretKey = generalKey();
-        String builder = Jwts.builder()
-                // JWT_ID
-//                .setId(id)
-                // 接受者
-                .setAudience("")
-                // 自定义属性
-                .setClaims(null)
-                // 主题
-                .setSubject("")
-                // 签发者
-                .setIssuer("")
-                // 签发时间
-                .setIssuedAt(new Date())
-                // 失效时间
-                .setNotBefore(new Date())
-                // 过期时间
-                .setExpiration(new Date(System.currentTimeMillis() + 100 * 30))
-                // 签名算法以及密匙
-//                .signWith(signatureAlgorithm, secretKey);
-                // 将复杂的 jwt 验证 token 转化为安全的 String 字符串
-                .compact();
         // 使用父类的方法完成密码验证
 //        super.additionalAuthenticationChecks(userDetails, authentication);
     }

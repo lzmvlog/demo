@@ -17,10 +17,22 @@ import java.io.IOException;
  * @Description： 图形验证码过滤器
  * <p>
  * OncePerRequestFilter 可以确保一次请求只会通过一次该过滤器 （Filter 在实际的操作中并不能保证这一点）
+ * 这里这个是使用的 springsecurity  配置 实现拦截验证
  */
 @Slf4j
 public class VerificationCodeFilter extends OncePerRequestFilter {
 
+    /**
+     * 与{@code doFilter}的合同相同，但保证在单个请求线程中每个请求仅被调用一次。
+     * 有关详细信息，请参见{@link #shouldNotFilterAsyncDispatch（）}。
+     * <p>提供HttpServletRequest和HttpServletResponse参数，而不是默认的ServletRequest和ServletResponse参数。
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -34,13 +46,19 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
         }
     }
 
+    /**
+     * 验证 登录的验证码
+     *
+     * @param request
+     * @throws VerificationCodeException 图形验证码错误
+     */
     public void verificationCode(HttpServletRequest request) throws VerificationCodeException {
         // 后去验证表单的值 --> 图形验证码
         String captcha = request.getParameter("captcha");
-        log.info("表单的验证码： {}",captcha);
+        log.info("表单的验证码： {}", captcha);
         // 取出 访问时 已经添加在 session 中的验证码
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
-        log.info("session的验证码： {}",sessionCaptcha);
+        log.info("session的验证码： {}", sessionCaptcha);
         // 判断两次的值是否值一样的
         if (!StrUtil.isEmpty(sessionCaptcha)) {
             // 清楚当前的验证码 无论是否成功或是失败 客户端登录失败应刷新当前的验证码
