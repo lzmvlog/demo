@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author： ShaoJie
  * @data： 2020年02月24日 16:50
- * @Description：
+ * @Description： 暂时没有用处
  */
 public class RequestFilterAuthenticationDetilsSource implements AuthenticationDetailsSource<HttpServletRequest, RequestFilter> {
 

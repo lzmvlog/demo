@@ -1,7 +1,8 @@
-package com.shaojie.authority.security;
+package com.shaojie.authority.config;
 
-import com.shaojie.authority.filter.RequestFilter;
 import com.shaojie.authority.model.Purview;
+import com.shaojie.authority.security.MyAuthenticationProvider;
+import com.shaojie.authority.security.UserDetailsServiceImpl;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -86,10 +86,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    private AuthenticationProvider authenticationProvider;
 //    @Qualifier
 //    private MyAuthenticationProvider myAuthenticationProvider;
-    /*@Bean
-    public MyAuthenticationProvider myAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder){
-        return new MyAuthenticationProvider(this.userDetailsService,this.passwordEncoder());
-    }*/
+//    @Bean
+//    public MyAuthenticationProvider myAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder){
+//        return new MyAuthenticationProvider(this.userDetailsService,this.passwordEncoder());
+//    }
 
 //    @Bean
 //    public HttpSessionEventPublisher httpSessionEventPublisher(){
@@ -193,7 +193,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // 添加权限
         selectPurview(http);
 
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 // antMatchers 设置拦截的请求  hasAnyAuthority 对应的权限名称
                 // .hasAnyAuthority("PRODUCT_ADD") 用户所具有的权限
                 // 可替换成 .hasRole() 针对角色做验证
@@ -218,7 +219,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 // 处理登录请求的 地址
                 .loginProcessingUrl("/index")
-                .authenticationDetailsSource(myWebAuthenticationDetailsSource)
+                // 验证码信息 处理器
+//                .authenticationDetailsSource(myWebAuthenticationDetailsSource)
                 // 定义 故障处理器
 //                 .failureHandler()
                 // 修改 spring 提供的 默认登陆参数
@@ -238,13 +240,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 阻止 新会话登录 默认为 false
                 .maxSessionsPreventsLogin(true)
 //                .sessionRegistry(redisSessionRegistry)
-                .and()
+                // 前后端分离采用JWT 不需要session
+                // sessionCreationPolicy 允许指定 session 创建政策
+                // ALWAYS 始终创建一个 session
+                // NEVER  Spring Security永远不会创建{@link HttpSession}，但是会使用* {@link HttpSession}（如果已经存在）
+                // IF_REQUIRED  如果需要，Spring Security将仅创建一个{@link HttpSession}
+                // STATELESS Spring Security永远不会创建{@link HttpSession} 并且永远不会使用它来获取
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
                 // 防御固定的会话攻击的方式有四种：
                 // none() ：不做任何变动 ，登录之后沿用旧的 session
                 // newSession() ： 登录之后创建一个新的 session
                 // migrateSession() : 登录之后创建一个新的 session 并将旧的 session 中的数据复制过来
                 // changeSessionId() ： 不创建新的会话 而是使用由 servlet 容器提供的会话固定会话保护
-                .sessionFixation().none()
+//                .sessionFixation().none()
                 // 会话过期 跳转的 URl
 //                .invalidSessionUrl("/403")
                 // 自定义会话过期策略
@@ -256,7 +265,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .addFilterBefore(new VerificationCodeFilter(),
 //                        UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义的拦截器 在账号密码验证正确之后
-                .addFilterAfter(new RequestFilter(), UsernamePasswordAuthenticationFilter.class)
+                // .addFilterAfter(new RequestFilter(), UsernamePasswordAuthenticationFilter.class)
+                .and()
                 // 启用 CORS 支持
                 .cors()
                 .and()

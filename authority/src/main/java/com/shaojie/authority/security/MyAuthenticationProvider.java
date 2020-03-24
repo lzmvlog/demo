@@ -2,7 +2,6 @@ package com.shaojie.authority.security;
 
 import com.shaojie.authority.component.MyWebAuthenticationDetails;
 import com.shaojie.authority.exception.VerificationCodeException;
-import com.shaojie.authority.filter.RequestFilter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,8 +45,6 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
         this.setUserDetailsService(userDetailsService);
         this.setPasswordEncoder(passwordEncoder);
     }
-
-
 
     /**
      * 允许子类针对给定的身份验证请求对返回的（或缓存的）UserDetails 进行任何其他检查。
