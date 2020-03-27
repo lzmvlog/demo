@@ -6,32 +6,42 @@ import com.shaojie.authority.security.UserDetailsServiceImpl;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author ShaoJie
  * @Date 2019/10/25
+ * @Description： 该 springsecurity 作为基本的 springsecurity 配置  -- 基础配置 -- 已舍弃
+ * <p>
+ * 包含如下功能：
+ * 1、验证码校验 -- 采用 hutool 中的生成验证码
+ * 2、自定义实现验证登录 -- 其中包含对 验证码的自定义的校验
+ * 3、使用 redis 做 session 共享 -- 有个小瑕疵说不清楚 正常的 session 共享没有问题
+ * 4、跨域保护  --- 未实现完整
+ * <p>
+ * 包含 springsecurity 的三种验证方式：
+ * 1、基于内存做权限校验 -- 不连接数据库 做基础的校验 了解其中的实现方式
+ * 2、基础 JDBC 做权限校验 -- 这时候开始做简单的 权限验证 并带有对 权限的读取登录.....
+ * 3、完成基于数据库做权限校验 -- 自定义做权限验证的方式方法
  */
-@Configuration
+//@Configuration
 // 启动 SpringSecurity 的过滤器链
 @EnableWebSecurity
+// 启用 redis 保存 session
 //@EnableRedisHttpSession
+// 启用全局的 方法保护
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -74,8 +84,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public PurviewServiceImpl purviewService;
 
-    @Autowired
-    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
+//    @Autowired
+//    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
 
     /**
      * 请求拦截器

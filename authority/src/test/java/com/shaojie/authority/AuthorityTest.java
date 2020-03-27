@@ -1,14 +1,16 @@
 package com.shaojie.authority;
 
+import com.shaojie.authority.jwt.JwtUtil;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author ShaoJie
@@ -19,6 +21,9 @@ import java.util.Date;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AuthorityTest {
+
+    @Autowired
+    public JwtUtil jwtUtil;
 
     @Test
     public void contextLoads() {
@@ -53,7 +58,13 @@ public class AuthorityTest {
 //        签名算法和密钥
                 .signWith(SignatureAlgorithm.HS512, "tmax")
                 .compact();
-        log.info("token：{}",token);
+//        log.info("token：{}",token);
+//        User shaoJie = new User().setId(1)
+//                .setName("ShaoJie")
+//                .setPassword("123456")
+//                .setEnable(true);
+//        String token = jwtUtil.createToken();
+//        jwtUtil.parseToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuaWNleW9vIiwiYXV0aG9yaXRpZXMiOiJhZG1pbiIsImV4cCI6MTU4NTExNzc5MX0.9dbyn-KHOVMCzPjb2uAXMJLwonl32L2tnZvPEHhylDgie1pmQsDERtaFEObObqbPZez1huFiDhQSJkf0ssPYjQ");
     }
 
 }
