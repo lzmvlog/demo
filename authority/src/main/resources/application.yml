@@ -11,7 +11,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/authority?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
-    password: 5683
+    password: Root5683@
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
 #    关闭缓存
@@ -22,11 +22,12 @@ spring:
     open-in-view: true
     hibernate:
       ddl-auto: update
-  redis:
-    host: 192.168.88.131
-    port: 6379
-    password: 123456
-    database: 0
+#      使用 redis 保存 session
+#  redis:
+#    host: 192.168.88.131
+#    port: 6379
+#    password: 123456
+#    database: 0
 #   使用 redis 实现 session 共享
 #  session:
 #    redis:
@@ -34,12 +35,12 @@ spring:
 #      flush-mode: on_save
 #    store-type: redis
 #    timeout: 5m
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: 127.0.0.1:8090/token
-#          jwk-set-uri:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: 127.0.0.1:8090/token
+##          jwk-set-uri:
 logging:
   level:
     org.hibernate.SQL: debug

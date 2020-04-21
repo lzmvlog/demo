@@ -51,7 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      * 加载登录 通过用户名查找用户
      *
      * @param userName 登录的用户名称
-     * @return 用户信息
+     * @return UserDetails 用户信息
      * @throws UsernameNotFoundException 未找到用户登录名称信息
      */
     @Transactional(readOnly = true)
@@ -62,9 +62,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         // 权限集合 当前用户所具有的权限
         List<GrantedAuthority> authorityList = getUserAuthority(user.getId());
-        if (user == null) {
+        if (user == null)
             throw new UsernameNotFoundException("用户不存在");
-        }
+
         /**
          *  User(String username, String password, boolean enabled,
          * 			boolean accountNonExpired, boolean credentialsNonExpired,

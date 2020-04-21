@@ -1,5 +1,6 @@
 package com.shaojie.authority.jwt;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.IdUtil;
 import com.shaojie.authority.exception.TokenException;
 import com.shaojie.authority.service.impl.AuthorityServiceImpl;
@@ -50,7 +51,7 @@ public class JwtUtil {
                 // 设置过期时间
                 .setExpiration(new Date(exp))
                 // 设置 token 签发的时间
-//                .setIssuedAt(new DateTime())
+                .setIssuedAt(new DateTime())
                 // 设置签名 使用HS256算法，并设置SecretKey(字符串)  签名算法和秘钥
                 .signWith(SignatureAlgorithm.HS256, "ShaoJie" )
                 // 以下内容构建JWT并将其序列化为紧凑的，URL安全的字符串
@@ -74,7 +75,7 @@ public class JwtUtil {
     public static void main(String[] args) {
         JwtUtil jwtUtil = new JwtUtil();
 //        String token = jwtUtil.createToken();
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNjRmNzcxNjQyMjI0MmI2YWE1OTExZDdhMmFlNjkyOSIsInN1YiI6InRva2VuIiwiYXV0aG9yaXRpZXMiOiJhZG1pbiIsImV4cCI6MTU4NTEzNzM5NH0.tC8Y_T7Ipg7mhwnuI212KogCFeS6nkh0D5wxv7gGLXg";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhMzNjNzUxZDkzNjE0Y2M2ODMwZmRjZDM5ZjViNjc0OSIsInN1YiI6InRva2VuIiwiYXV0aG9yaXRpZXMiOiJhZG1pbiIsImV4cCI6MTU4NzIxNDA0MSwiaWF0IjoxNTg3MjEzOTgyfQ.QSBamMfUjDr-uy6bQ-lHfQloqozqjCmQ-aXSaRz3SSc";
         try {
             jwtUtil.parseToken(token);
         } catch (TokenException e) {

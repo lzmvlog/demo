@@ -1,22 +1,36 @@
 package com.shaojie.authority.config;
 
+import com.shaojie.authority.filter.JwtAuthTokenFilter;
+import com.shaojie.authority.handler.LoginFailureHandler;
+import com.shaojie.authority.handler.LoginSuccessHandler;
 import com.shaojie.authority.model.Purview;
 import com.shaojie.authority.security.MyAuthenticationProvider;
 import com.shaojie.authority.security.UserDetailsServiceImpl;
 import com.shaojie.authority.service.impl.PurviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +50,7 @@ import java.util.List;
  * 2、基础 JDBC 做权限校验 -- 这时候开始做简单的 权限验证 并带有对 权限的读取登录.....
  * 3、完成基于数据库做权限校验 -- 自定义做权限验证的方式方法
  */
-//@Configuration
+@Configuration
 // 启动 SpringSecurity 的过滤器链
 @EnableWebSecurity
 // 启用 redis 保存 session
@@ -84,27 +98,40 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public PurviewServiceImpl purviewService;
 
-//    @Autowired
-//    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
+    @Autowired
+    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> myWebAuthenticationDetailsSource;
+
+    /**
+     * 登录失败的处理器
+     */
+    @Autowired
+    public LoginFailureHandler loginFailureHandler;
+
+    /**
+     * 登录成功的处理器
+     */
+    @Autowired
+    public LoginSuccessHandler loginSuccessHandler;
 
     /**
      * 请求拦截器
      */
 //    @Autowired
 //    public RequestFilter requestFilter;
-//    @Autowired
-//    private AuthenticationProvider authenticationProvider;
-//    @Qualifier
-//    private MyAuthenticationProvider myAuthenticationProvider;
-//    @Bean
-//    public MyAuthenticationProvider myAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder){
-//        return new MyAuthenticationProvider(this.userDetailsService,this.passwordEncoder());
-//    }
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+    @Qualifier
+    private MyAuthenticationProvider myAuthenticationProvider;
 
-//    @Bean
-//    public HttpSessionEventPublisher httpSessionEventPublisher(){
-//        return new HttpSessionEventPublisher();
-//    }
+    @Bean
+    public MyAuthenticationProvider myAuthenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        return new MyAuthenticationProvider(this.userDetailsService, this.passwordEncoder());
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
 
 //    @Autowired
 //    private SpringSessionBackedSessionRegistry redisSessionRegistry;
@@ -229,6 +256,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 // 处理登录请求的 地址
                 .loginProcessingUrl("/index")
+                // 登录成功处理
+                .successHandler(loginSuccessHandler)
+                // 登录失败处理
+                .failureHandler(loginFailureHandler)
                 // 验证码信息 处理器
 //                .authenticationDetailsSource(myWebAuthenticationDetailsSource)
                 // 定义 故障处理器
@@ -238,17 +269,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 // 开启记住我功能
-                .rememberMe()
-                .and()
+//                .rememberMe()
+//                .and()
                 // 开启登出
                 .logout()
                 .and()
                 // 会话管理
                 .sessionManagement()
                 // 设置最大的会话数
-                .maximumSessions(1)
+//                .maximumSessions(1)
                 // 阻止 新会话登录 默认为 false
-                .maxSessionsPreventsLogin(true)
+//                .maxSessionsPreventsLogin(true)
 //                .sessionRegistry(redisSessionRegistry)
                 // 前后端分离采用JWT 不需要session
                 // sessionCreationPolicy 允许指定 session 创建政策
@@ -256,8 +287,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // NEVER  Spring Security永远不会创建{@link HttpSession}，但是会使用* {@link HttpSession}（如果已经存在）
                 // IF_REQUIRED  如果需要，Spring Security将仅创建一个{@link HttpSession}
                 // STATELESS Spring Security永远不会创建{@link HttpSession} 并且永远不会使用它来获取
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 // 防御固定的会话攻击的方式有四种：
                 // none() ：不做任何变动 ，登录之后沿用旧的 session
                 // newSession() ： 登录之后创建一个新的 session
@@ -269,14 +300,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义会话过期策略
 //                .invalidSessionStrategy(new MyInvalidSessionStrategy())
                 // 最大会话数
-                .and()
+//                .and()
                 // 添加过滤器 将 过滤器添加在 UsernamePasswordAuthenticationFilter 之前 也就是在验证账号密码之前
                 // 自定义实现 用户登录拦截 之前
-//                .addFilterBefore(new VerificationCodeFilter(),
-//                        UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new VerificationCodeFilter(), UsernamePasswordAuthenticationFilter.class)
                 // 添加自定义的拦截器 在账号密码验证正确之后
-                // .addFilterAfter(new RequestFilter(), UsernamePasswordAuthenticationFilter.class)
-                .and()
+                .addFilterAfter(new JwtAuthTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .and()
                 // 启用 CORS 支持
                 .cors()
                 .and()
@@ -309,8 +339,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin"));
         // 允许从百度站点跨域 这里的参数是一个 List 集合 少量数据测试 不需要读取数据库了
-        corsConfiguration.setAllowedOrigins(Arrays.asList("https://www.baidu.com/"));
+//        corsConfiguration.setAllowedOrigins(Arrays.asList("https://www.baidu.com/"));
         // 允许使用 GET POST 方法
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST"));
         // 允许携带凭证

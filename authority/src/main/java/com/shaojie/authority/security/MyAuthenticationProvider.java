@@ -1,7 +1,5 @@
 package com.shaojie.authority.security;
 
-import com.shaojie.authority.component.MyWebAuthenticationDetails;
-import com.shaojie.authority.exception.VerificationCodeException;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -75,11 +73,11 @@ public class MyAuthenticationProvider extends DaoAuthenticationProvider {
         }
         // 当修改了继承的类 现在实现图形验证码的 自定义
         // 实现图片验证码的逻辑
-        MyWebAuthenticationDetails details = (MyWebAuthenticationDetails) authentication.getDetails();
+//        MyWebAuthenticationDetails details = (MyWebAuthenticationDetails) authentication.getDetails();
         // 验证 验证码是正确
-        if (!details.getImageCodeIsRight()) {
-            throw new VerificationCodeException();
-        }
+//        if (!details.getImageCodeIsRight()) {
+//            throw new VerificationCodeException();
+//        }
         // 使用父类的方法完成密码验证
 //        super.additionalAuthenticationChecks(userDetails, authentication);
     }
