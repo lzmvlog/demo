@@ -12,7 +12,7 @@ public class CompareSorter {
             int minPro = i;
             for (int j = i + 1; j < args.length; j++) {
                 minPro = args[j].compareTo(args[minPro]) == -1 ? j : minPro;
-        }
+            }
             swap(args, i, minPro);
         }
     }

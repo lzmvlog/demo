@@ -38,12 +38,12 @@ public class TestController {
 
     @ResponseBody
     @GetMapping("success")
-    public String success(Model model,HttpServletRequest request) {
+    public String success(Model model, HttpServletRequest request) {
         String out_trade_no = request.getParameter("out_trade_no");
         String total_amount = request.getParameter("total_amount");
-        Map<String ,String> map = new HashMap<>();
-        map.put("out_trade_no",out_trade_no);
-        map.put("total_amount",total_amount);
+        Map<String, String> map = new HashMap<>();
+        map.put("out_trade_no", out_trade_no);
+        map.put("total_amount", total_amount);
         String s = JSON.toJSONString(map);
 //        model.addAttribute("order", out_trade_no);
         return s;
@@ -67,13 +67,13 @@ public class TestController {
         String subject = request.getParameter("WIDsubject");
         // 商品描述，
         String body = request.getParameter("WIDbody");
-        Map<String,String> map = new HashMap<>();
-        map.put("out_trade_no",out_trade_no);
-        map.put("total_amount",total_amount);
-        map.put("subject",subject);
-        map.put("body",body);
-        map.put("timeout_express","10m");
-        map.put("product_code","FAST_INSTANT_TRADE_PAY");
+        Map<String, String> map = new HashMap<>();
+        map.put("out_trade_no", out_trade_no);
+        map.put("total_amount", total_amount);
+        map.put("subject", subject);
+        map.put("body", body);
+        map.put("timeout_express", "10m");
+        map.put("product_code", "FAST_INSTANT_TRADE_PAY");
 //        map.put("version","10");
         String s = JSON.toJSONString(map);
 //        System.out.println(s);

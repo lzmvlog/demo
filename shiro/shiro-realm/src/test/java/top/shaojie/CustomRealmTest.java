@@ -15,7 +15,7 @@ import top.shaojie.realm.CustomRealm;
 public class CustomRealmTest {
 
     @Test
-    public void test(){
+    public void test() {
         CustomRealm customRealm = new CustomRealm();
 
         // 构建 SecurityManager 环境
@@ -41,7 +41,7 @@ public class CustomRealmTest {
 //        subject.checkPermissions("user:delete","user:update");
 
         subject.checkRoles("admin");
-        subject.checkPermissions("user:delete","user:add");
+        subject.checkPermissions("user:delete", "user:add");
 
     }
 }

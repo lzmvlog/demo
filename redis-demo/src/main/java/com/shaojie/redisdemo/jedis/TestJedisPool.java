@@ -28,7 +28,7 @@ public class TestJedisPool {
         // 客户端对象
         @Cleanup Jedis jedis = jedisPool.getResource();
         jedis.auth("123456");
-        log.info("name: {}",jedis.get("name"));
+        log.info("name: {}", jedis.get("name"));
     }
 
 }

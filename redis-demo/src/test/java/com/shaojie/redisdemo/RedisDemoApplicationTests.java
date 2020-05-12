@@ -19,7 +19,7 @@ class RedisDemoApplicationTests {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Bean(name="redisTemplate")
+    @Bean(name = "redisTemplate")
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, String> template = new RedisTemplate<>();
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
@@ -36,7 +36,7 @@ class RedisDemoApplicationTests {
     }
 
     @Bean
-    public StringRedisSerializer redisSerializer(){
+    public StringRedisSerializer redisSerializer() {
         return new StringRedisSerializer(StandardCharsets.UTF_8);
     }
 

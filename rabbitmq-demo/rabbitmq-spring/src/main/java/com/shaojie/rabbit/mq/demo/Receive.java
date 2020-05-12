@@ -7,7 +7,7 @@ package com.shaojie.rabbit.mq.demo;
  */
 public class Receive {
 
-    public void listen(String message){
+    public void listen(String message) {
         System.out.println("-receive " + message);
     }
 }

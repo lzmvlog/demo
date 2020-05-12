@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
 
     @GetMapping("add")
-    public String add(){
+    public String add() {
         return "product/add";
     }
 
     @GetMapping("update")
-    public String update(){
+    public String update() {
         return "product/update";
     }
 
     @GetMapping("list")
-    public String list(){
+    public String list() {
         return "product/list";
     }
 
     @GetMapping("delete")
-    public String delete(){
+    public String delete() {
         return "product/delete";
     }
 

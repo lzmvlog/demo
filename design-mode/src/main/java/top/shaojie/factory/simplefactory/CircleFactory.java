@@ -8,7 +8,7 @@ package top.shaojie.factory.simplefactory;
  */
 public class CircleFactory extends ShapeFactory {
 
-    public Pattern drowCircle(){
+    public Pattern drowCircle() {
         return new Circle();
     }
 

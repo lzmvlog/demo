@@ -15,6 +15,6 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 // 这里的启动熔断器不是指单独开启熔断
 public class HystrixApplication {
     public static void main(String[] args) {
-        SpringApplication.run(HystrixApplication.class,args);
+        SpringApplication.run(HystrixApplication.class, args);
     }
 }

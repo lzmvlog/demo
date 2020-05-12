@@ -41,7 +41,7 @@ public class TestSort {
         // 初始化一个升序或降序的参数
         SortingParams sortingParams = new SortingParams();
         log.info("排序 默认升序排列 sort --- {}", jedis.sort("value", sortingParams.asc()));
-        log.info("排序 降序排列 sort --- {}", jedis.sort("value",sortingParams.desc()));
+        log.info("排序 降序排列 sort --- {}", jedis.sort("value", sortingParams.desc()));
     }
 
 }

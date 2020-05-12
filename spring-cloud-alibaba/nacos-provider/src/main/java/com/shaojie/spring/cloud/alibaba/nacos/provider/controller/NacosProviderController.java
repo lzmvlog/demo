@@ -17,7 +17,7 @@ public class NacosProviderController {
 
     @GetMapping(value = "/echo/{message}")
     public String echo(@PathVariable String message) {
-        return String.format("Hello Nacos %s i am from %s ", message,port);
+        return String.format("Hello Nacos %s i am from %s ", message, port);
     }
 
 }

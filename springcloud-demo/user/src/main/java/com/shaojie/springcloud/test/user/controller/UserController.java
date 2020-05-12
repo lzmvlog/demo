@@ -19,7 +19,7 @@ public class UserController {
     private AdminHystrixService adminService;
 
     @GetMapping("sayHi")
-    public String sayHi(String message){
+    public String sayHi(String message) {
         return adminService.sayHi(message);
     }
 

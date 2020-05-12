@@ -24,8 +24,8 @@ public class AdminService {
 //        return restTemplate.getForObject( eurekaClient.getNextServerFromEureka("ORDER",false).getHomePageUrl() + "/hi?message=" + message,String.class);
 //    }
 
-    public String sayHi(String message){
-        return restTemplate.getForObject( "http://ORDER:8050/hi?message=" + message,String.class);
+    public String sayHi(String message) {
+        return restTemplate.getForObject("http://ORDER:8050/hi?message=" + message, String.class);
 //        return restTemplate.getForObject( "http://localhost:8050/hi?message=" + message,String.class);
     }
 

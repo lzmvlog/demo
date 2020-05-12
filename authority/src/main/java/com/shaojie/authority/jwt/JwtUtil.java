@@ -22,6 +22,8 @@ import java.sql.Date;
 @Configuration
 public class JwtUtil {
 
+    String signingKey = "SigningKey";
+
     /**
      * 权限服务
      */
@@ -45,7 +47,7 @@ public class JwtUtil {
                 .setSubject("token")
                 // 设置角色
 //                .claim("admin", "ShaoJie")
-                .claim("authorities","admin")
+//                .claim("authorities", "admin")
                 // 设置角色集
 //                .addClaims()
                 // 设置过期时间
@@ -53,7 +55,7 @@ public class JwtUtil {
                 // 设置 token 签发的时间
                 .setIssuedAt(new DateTime())
                 // 设置签名 使用HS256算法，并设置SecretKey(字符串)  签名算法和秘钥
-                .signWith(SignatureAlgorithm.HS256, "ShaoJie" )
+                .signWith(SignatureAlgorithm.HS256, signingKey)
                 // 以下内容构建JWT并将其序列化为紧凑的，URL安全的字符串
                 .compact();
         log.info("token:{}", token);
@@ -66,7 +68,7 @@ public class JwtUtil {
      * @param token 用户的 token
      */
     public void parseToken(String token) throws TokenException {
-        Claims claims = Jwts.parser().setSigningKey("ShaoJie").parseClaimsJwt(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody();
         if (claims.equals(null))
             throw new TokenException();
         log.info("解析的数据：{}", claims);
@@ -75,11 +77,12 @@ public class JwtUtil {
     public static void main(String[] args) {
         JwtUtil jwtUtil = new JwtUtil();
 //        String token = jwtUtil.createToken();
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhMzNjNzUxZDkzNjE0Y2M2ODMwZmRjZDM5ZjViNjc0OSIsInN1YiI6InRva2VuIiwiYXV0aG9yaXRpZXMiOiJhZG1pbiIsImV4cCI6MTU4NzIxNDA0MSwiaWF0IjoxNTg3MjEzOTgyfQ.QSBamMfUjDr-uy6bQ-lHfQloqozqjCmQ-aXSaRz3SSc";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZWJmZjVjYTc4N2I0OWY0YTczNGJmMmY4Yzg5YTMxZSIsInN1YiI6InRva2VuIiwiZXhwIjoxNTg3ODkzNzY0LCJpYXQiOjE1ODc4OTM3MDV9.1F75dmR5IvesSQhLmxaySRB8RnnnOvpzctnp--pG4w4";
         try {
             jwtUtil.parseToken(token);
         } catch (TokenException e) {
-            e.printStackTrace();
+            log.info("token 过期");
+//            e.printStackTrace();
         }
         System.out.println(token);
     }

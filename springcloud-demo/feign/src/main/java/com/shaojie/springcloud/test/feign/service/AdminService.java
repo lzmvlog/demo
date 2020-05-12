@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AdminService {
 
     // feign 下使用熔断器
-   @GetMapping("hi")
-   String sayHi(@RequestParam(value = "message") String message);
+    @GetMapping("hi")
+    String sayHi(@RequestParam(value = "message") String message);
 
 }

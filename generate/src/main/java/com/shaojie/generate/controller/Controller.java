@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Controller {
 
     @GetMapping("index")
-    public String index(Model model){
-        model.addAttribute("user","Zhangsan");
+    public String index(Model model) {
+        model.addAttribute("user", "Zhangsan");
         return "index";
     }
 
     @GetMapping("em")
-    public String em(){
+    public String em() {
         return "em";
     }
 

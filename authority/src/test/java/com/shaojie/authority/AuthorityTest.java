@@ -52,7 +52,7 @@ public class AuthorityTest {
 //        主题 放入用户名
                 .setSubject("niceyoo")
 //        自定义属性 放入用户拥有请求权限
-                .claim("authorities","admin")
+                .claim("authorities", "admin")
 //        失效时间
                 .setExpiration(new Date(System.currentTimeMillis() + 7 * 60 * 1000))
 //        签名算法和密钥

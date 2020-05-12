@@ -25,6 +25,7 @@ public class LoginFilter extends ZuulFilter {
      * 2. routing：路由之时
      * 3. post：路由之后
      * 4. error：发送错误调用
+     *
      * @return
      */
     @Override
@@ -34,6 +35,7 @@ public class LoginFilter extends ZuulFilter {
 
     /**
      * 配置过滤的顺序
+     *
      * @return
      */
     @Override
@@ -43,6 +45,7 @@ public class LoginFilter extends ZuulFilter {
 
     /**
      * 配置是否需要过滤：true/需要，false/不需要
+     *
      * @return
      */
     @Override
@@ -52,6 +55,7 @@ public class LoginFilter extends ZuulFilter {
 
     /**
      * 过滤器的具体业务代码
+     *
      * @return
      * @throws ZuulException
      */

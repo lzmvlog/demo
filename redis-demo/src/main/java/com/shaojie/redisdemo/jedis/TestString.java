@@ -65,6 +65,6 @@ public class TestString {
         // 获取原来的值 更新为新值
         // log.info("获取原来的值 更新为新值 --- {}", jedis.getSet("key1", "value01"));
         // 截取指定的字符串
-        log.info("截取指定的字符串 --- {}", jedis.getrange("key1",0,4));
+        log.info("截取指定的字符串 --- {}", jedis.getrange("key1", 0, 4));
     }
 }

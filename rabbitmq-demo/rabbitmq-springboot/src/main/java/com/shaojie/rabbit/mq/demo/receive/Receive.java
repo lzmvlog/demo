@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class Receive {
 
     @RabbitListener(queues = {RabbitmqConfiguration.QUEUE})
-    public void listener(String message){
+    public void listener(String message) {
         System.out.println("-message:" + message);
     }
 }

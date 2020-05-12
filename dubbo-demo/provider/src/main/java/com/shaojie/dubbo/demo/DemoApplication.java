@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class DemoApplication {
     public static void main(String[] args) throws IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"provider.xml"});
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"provider.xml"});
         context.start();
         System.in.read(); // 按任意键退出
     }

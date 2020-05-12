@@ -24,7 +24,7 @@ class GenerateApplicationTests {
     void contextLoads() throws SQLException {
         List table = metaData.getTable();
 
-        for (int i = 0; i < table.size() ; i++) {
+        for (int i = 0; i < table.size(); i++) {
             String sql = "select * from " + table.get(i);
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
             RowCountCallbackHandler rcch = new RowCountCallbackHandler();

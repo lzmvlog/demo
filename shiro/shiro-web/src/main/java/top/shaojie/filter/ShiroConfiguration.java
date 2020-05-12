@@ -18,6 +18,7 @@ public class ShiroConfiguration {
 
     /**
      * 配置 shirofirter
+     *
      * @param manager
      * @return
      */

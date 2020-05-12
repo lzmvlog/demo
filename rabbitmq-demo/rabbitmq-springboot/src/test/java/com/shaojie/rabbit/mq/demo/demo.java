@@ -17,7 +17,7 @@ public class demo {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void send(){
+    public void send() {
         String message = "hello rabbitmq-spring";
         // 直接调用 convertAndSend 方法发送信息
         /**
@@ -25,11 +25,11 @@ public class demo {
          * routingKey 路由键
          * object 发送内容
          */
-        rabbitTemplate.convertAndSend(RabbitmqConfiguration.QUEUE,message);
+        rabbitTemplate.convertAndSend(RabbitmqConfiguration.QUEUE, message);
     }
 
     @Test
-    public void test(){
+    public void test() {
         send();
     }
 }

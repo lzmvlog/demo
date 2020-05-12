@@ -14,11 +14,11 @@ spring:
     password: Root5683@
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
-#    关闭缓存
+    #    关闭缓存
     cache: false
   jpa:
     database: mysql
-#    show-sql: true
+    #    show-sql: true
     open-in-view: true
     hibernate:
       ddl-auto: update

@@ -14,7 +14,7 @@ public enum DataTypeEm {
 
     CHAR(1, "char"),
     INT(4, "int"),
-    FLOAT(7,"float"),
+    FLOAT(7, "float"),
     VARCHAR(12, "varchar"),
     DATE(91, "date"),
     DATETIME(93, "datetime");

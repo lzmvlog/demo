@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class OrderServiceImpl implements OrderService {
 
-//    @Autowired
+    //    @Autowired
 //  关闭某个服务的启动时检查 (没有提供者时报错)： 配置了  onsumer 的 check 就可以做全局的控制
     @Reference(check = false)
 //    dubbo 直连 跳过 注册中心 loadbalance 负载均衡

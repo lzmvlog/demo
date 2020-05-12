@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("index")
-    public String index(){
+    public String index() {
         return "index";
     }
 
     @GetMapping("403")
-    public String error(){
+    public String error() {
         return "403";
     }
 
     @GetMapping("login")
-    public String login(){
+    public String login() {
         return "login";
     }
 

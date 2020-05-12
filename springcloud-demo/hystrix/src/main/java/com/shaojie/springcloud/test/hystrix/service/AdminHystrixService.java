@@ -29,7 +29,7 @@ public class AdminHystrixService {
 
     @HystrixCommand(fallbackMethod = "hiError")
     public String sayHi(String message) {
-        return restTemplate.getForObject( "http://ORDER:8050/hi?message=" + message, String.class);
+        return restTemplate.getForObject("http://ORDER:8050/hi?message=" + message, String.class);
     }
 
     public String hiError(String message) {

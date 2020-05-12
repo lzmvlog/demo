@@ -19,12 +19,12 @@ public class Dog implements Compare {
 
     @Override
     public String toString() {
-        return  "大小：" + this.food ;
+        return "大小：" + this.food;
     }
 
     public Integer compareTo(Object o) {
         Dog d = (Dog) o;
-        if(this.food < d.food) return -1;
+        if (this.food < d.food) return -1;
         else if (this.food > d.food) return 1;
         else return 0;
     }

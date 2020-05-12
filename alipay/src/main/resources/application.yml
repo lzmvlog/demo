@@ -7,19 +7,19 @@ server:
   port: 8090
 
 ali:
-#  支付宝网关（固定）
+  #  支付宝网关（固定）
   url: https://openapi.alipaydev.com/gateway.do
-#  url: https://openapi.alipay.com/gateway.do
-#  APPID
+  #  url: https://openapi.alipay.com/gateway.do
+  #  APPID
   app_id: 2019090166806042
-#  app_id: 2016101400685499
-#  私钥
+  #  app_id: 2016101400685499
+  #  私钥
   app_private_key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWYTcYwho2VZQCK0QuK052mi32EUCjK5X6eGTpykNC1K8XcyDzjb410GlFcNTyrFbud243CcSHuszVVY2koMagX8LXp7DPHJpTNZgL1DdkzQuclsvF10EQxMmQLtRyQsjfeJlkJ/vXAx5z0hhvSjbdLCmPSeMCOxIrwSQrYr68czG6VUrsCZFz0MFd7txM8AQvL+4Awps1WbX67CeGWx4PnJ24VhC0h8Zq2YxpiySyW80Hdse4AShE8ho6VQ/QULVgAHRCuJ6tx1LhXWVqcZcop+E6ruFqAmLAO6d3GD4V/kmxTMdbANh631f0BLZWsEqlTggu42TEaHiZDffnCTbTAgMBAAECggEAEBZYUZK6QSPIkK7WPWYun6uAzTktRAdupPvqN8SGi4i7LnQHi2aXeaRRDreyYD+lkR8/sC2gU7DdJtlfLMRyW0fDTVTIKm/x5oLuQB20y1jQLDFJnWGYuVWEBqOr4IlaeeWp6zgHzgmsYVGRgZ5b3i9SRtztpxhwqjOgTe/jXb9+5E+4TaYn/WQdhi/Mf9ukpxh0u1Ikdorg0y+9CLVo/uXOZzzNSxeEqSvNMMLviKNrq33P8PDAoS5msiiYeol4BKK3G2PrTiDnn/gsf3ioRKNbBdJWhn1U36q0oRvu5PTRCufbFZJoZ4coJzGPnzvAFwJo9Lv+l7K3Qlxp9feLAQKBgQDW0GxuGpf6M5hWRA9GVrOlnrWLXn6jfI5E/N++1H395ZO3bfAVXAQsFjtlENeCSX5ceUv/ihAOKr6JHV9QH+mI80IARwNzvOYFv9p7pQwJlcq5sxXFVBbdhL+XvAlp47R9/tvI7J3FOrS9HBijOamCX5LiNV+gZY4ulcKiWpzIgQKBgQCzNjOe8yp5gikx8g+vribhZ1v5s1vRuORLRWBYwiIAfsqFyEqTr64T5avVULyt2qT6Sh+z0EthYVRlwCFuzjymoix6sq264KkBcR6ONPECextjAS08Cq3MZfc/wOEvqwz/9XLIjq8ZKxPLk7AWvFw2oGnn5UBQTbdiG/1da/G1UwKBgBexDQRnsnNJ1XdOMlETpuSRSHyCg30Mc7RwH00wqmSiOVR1r5DrgRpLqWlQHjSkXmdciWE5nOOzGyiMMMLpghw0mAbnzh2pq8Tej/4rCdTUzHMGqVQGHi94QJk/h9pB3to2jY7vacci3mQtARqfdW6Hk++W62EJUlEY+0pkq/4BAoGAZTtM1ZDOgWzBEHGH4tkhJVpZXieuyj0C2HIMBpdC1bzJceC+H8axMpQeCJVev2YuoyOT3OLgcdWk8wUg3ZKqOAaL0ZN1B4c4cJQRiorlSV15DufvQWdW3YsLq3usuFyLL1rax+exiSoIOIrogS9Nd54NtOyO882ytTzSVh9PnfkCgYEApCfmQQQ5ZU3ntn8j6VQ4+p+pBkapQZlWvg4BXpF+rmsi3os0+duljjNj1gB/o8DfLWXIzG1NaTJUR1F0NFoj1xPfCcsw3RnjFaMcnqByIwBDZWx0LH4S6zPd9hAddW66NhxgqQ0YeW+3rfuLPpKUYs9zI3h6Be4zbmzOxfbAuDs=
-#  参数返回格式
+  #  参数返回格式
   format: json
-#  编码集
+  #  编码集
   charset: UTF-8
-#  支付宝公钥，由支付宝生成
+  #  支付宝公钥，由支付宝生成
   ali_pay_publickey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlmE3GMIaNlWUAitELitOdpot9hFAoyuV+nhk6cpDQtSvF3Mg842+NdBpRXDU8qxW7nduNwnEh7rM1VWNpKDGoF/C16ewzxyaUzWYC9Q3ZM0LnJbLxddBEMTJkC7UckLI33iZZCf71wMec9IYb0o23Swpj0njAjsSK8EkK2K+vHMxulVK7AmRc9DBXe7cTPAELy/uAMKbNVm1+uwnhlseD5yduFYQtIfGatmMaYskslvNB3bHuAEoRPIaOlUP0FC1YAB0QriercdS4V1lanGXKKfhOq7hagJiwDundxg+Ff5JsUzHWwDYet9X9AS2VrBKpU4ILuNkxGh4mQ335wk20wIDAQAB
-#  商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA，推荐使用 RSA2
+  #  商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA，推荐使用 RSA2
   sign_type: RSA2

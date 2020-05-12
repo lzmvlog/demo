@@ -24,7 +24,7 @@ public class OrderController {
 
     @ResponseBody
     @GetMapping("/init/{id}")
-    public List<User> initOrder(@PathVariable(value = "id") Integer id){
+    public List<User> initOrder(@PathVariable(value = "id") Integer id) {
         return orderService.initOrder(id);
     }
 

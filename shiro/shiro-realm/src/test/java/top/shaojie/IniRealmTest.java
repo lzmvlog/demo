@@ -14,7 +14,7 @@ import org.junit.Test;
 public class IniRealmTest {
 
     @Test
-    public void test(){
+    public void test() {
         IniRealm iniRealm = new IniRealm("classpath:user.ini");
 
         // 构建 SecurityManager 环境
@@ -30,7 +30,7 @@ public class IniRealmTest {
         System.out.println("isAuthenticated:" + subject.isAuthenticated());
 
         subject.checkRoles("admin");
-        subject.checkPermissions("user:delete","user:update");
+        subject.checkPermissions("user:delete", "user:update");
     }
 
 }

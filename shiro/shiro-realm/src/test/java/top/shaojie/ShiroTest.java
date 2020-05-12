@@ -19,12 +19,12 @@ public class ShiroTest {
     SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
 
     @Before
-    public void addUser(){
+    public void addUser() {
         simpleAccountRealm.addAccount("shaojie", "123456");
     }
 
     @Test
-    public void test(){
+    public void test() {
         // 构建 SecurityManager 环境
         DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
         defaultSecurityManager.setRealm(simpleAccountRealm);

@@ -56,11 +56,11 @@ public class TestHash {
         // 获取 hash 的大小
         log.info("获取 hash 的大小 hlen --- {}", jedis.hlen("key"));
         // 判断某个值是否存在 存在返回 true 否则返回 false
-        log.info("判断某个值是否存在 hlen --- {}", jedis.hexists("key","key5"));
+        log.info("判断某个值是否存在 hlen --- {}", jedis.hexists("key", "key5"));
         // 获取 hash 中单个的值
-        log.info("获取 hash 中的值 hlen --- {}", jedis.hget("key","key1"));
+        log.info("获取 hash 中的值 hlen --- {}", jedis.hget("key", "key1"));
         // 获取 hash 中多个的值
-        log.info("获取 hash 中的值 hlen --- {}", jedis.hmget("key","key1","key2"));
+        log.info("获取 hash 中的值 hlen --- {}", jedis.hmget("key", "key1", "key2"));
     }
 
 }

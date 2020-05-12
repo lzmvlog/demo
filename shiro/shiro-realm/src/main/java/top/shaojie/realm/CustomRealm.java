@@ -60,6 +60,7 @@ public class CustomRealm extends AuthorizingRealm {
 
     /**
      * 获取角色信息
+     *
      * @param userName
      * @return
      */
@@ -107,7 +108,7 @@ public class CustomRealm extends AuthorizingRealm {
      * 使用 Md5Hash 加密 加盐
      */
     public static void main(String[] args) {
-        Md5Hash md5Hash = new Md5Hash("123456","shaojie");
+        Md5Hash md5Hash = new Md5Hash("123456", "shaojie");
         System.out.println(md5Hash.toString());
     }
 }

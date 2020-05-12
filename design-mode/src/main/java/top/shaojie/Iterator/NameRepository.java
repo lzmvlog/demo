@@ -6,7 +6,7 @@ package top.shaojie.Iterator;
  * @Description：
  */
 public class NameRepository implements Container {
-    public String names[] = {"Robert" , "John" ,"Julie" , "Lora"};
+    public String names[] = {"Robert", "John", "Julie", "Lora"};
 
     @Override
     public Iterator getIterator() {
@@ -19,7 +19,7 @@ public class NameRepository implements Container {
 
         @Override
         public boolean hasNext() {
-            if(index < names.length){
+            if (index < names.length) {
                 return true;
             }
             return false;
@@ -27,7 +27,7 @@ public class NameRepository implements Container {
 
         @Override
         public Object next() {
-            if(this.hasNext()){
+            if (this.hasNext()) {
                 return names[index++];
             }
             return null;

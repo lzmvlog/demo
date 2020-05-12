@@ -15,7 +15,7 @@ public class NacoConfigController {
     String name;
 
     @GetMapping("advice")
-    public String advice(){
+    public String advice() {
         return name;
     }
 
