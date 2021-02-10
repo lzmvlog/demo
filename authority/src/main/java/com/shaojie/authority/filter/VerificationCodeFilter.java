@@ -39,11 +39,10 @@ public class VerificationCodeFilter extends OncePerRequestFilter {
         // 非登录请求不校验当前的值
         if (!"/index".equals(request.getRequestURI())) {
             // 放行
-            filterChain.doFilter(request, response);
         } else {
             verificationCode(request);
-            filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 
     /**

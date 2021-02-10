@@ -9,7 +9,7 @@ spring:
     #    host: 127.0.0.1
     #    port: 5672
     #   简写上述的连接
-    addresses: 127.0.0.1:5672
-    username: ShaoJie
+    addresses: 192.168.1.106:5672
+    username: shaojie
     password: 123456
-    virtual-host: /test
+    virtual-host: /ems

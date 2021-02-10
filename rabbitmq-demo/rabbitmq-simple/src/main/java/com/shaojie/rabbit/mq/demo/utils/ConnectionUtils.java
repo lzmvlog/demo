@@ -22,13 +22,13 @@ public class ConnectionUtils {
         // 定义连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         // 设置连接地址
-        factory.setHost("127.0.0.1");
+        factory.setHost("192.168.1.106");
         // 设置连接端口
         factory.setPort(5672);
         //  连接
-        factory.setVirtualHost("test");
+        factory.setVirtualHost("/ems");
         // 用户名
-        factory.setUsername("ShaoJie");
+        factory.setUsername("shaojie");
         // 密码
         factory.setPassword("123456");
         return factory.newConnection();

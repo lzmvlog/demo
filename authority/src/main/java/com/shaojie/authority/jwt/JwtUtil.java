@@ -46,7 +46,8 @@ public class JwtUtil {
                 // 设置主题
                 .setSubject("token")
                 // 设置角色
-//                .claim("admin", "ShaoJie")
+                .claim("auth", "ShaoJie")
+                .claim("auth1", "ShaoJie1")
 //                .claim("authorities", "admin")
                 // 设置角色集
 //                .addClaims()
@@ -68,16 +69,24 @@ public class JwtUtil {
      * @param token 用户的 token
      */
     public void parseToken(String token) throws TokenException {
-        Claims claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody();
+//        Claims claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser()
+                .setSigningKey(signingKey)   
+                .parseClaimsJws(token)
+                .getBody();
+        System.out.println(claims);
+        Object t = claims.get("auth");
+        System.out.println(t.toString());
         if (claims.equals(null))
             throw new TokenException();
         log.info("解析的数据：{}", claims);
+        log.info(claims.getSubject());
     }
 
     public static void main(String[] args) {
         JwtUtil jwtUtil = new JwtUtil();
-//        String token = jwtUtil.createToken();
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZWJmZjVjYTc4N2I0OWY0YTczNGJmMmY4Yzg5YTMxZSIsInN1YiI6InRva2VuIiwiZXhwIjoxNTg3ODkzNzY0LCJpYXQiOjE1ODc4OTM3MDV9.1F75dmR5IvesSQhLmxaySRB8RnnnOvpzctnp--pG4w4";
+        String token = jwtUtil.createToken();
+//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZWJmZjVjYTc4N2I0OWY0YTczNGJmMmY4Yzg5YTMxZSIsInN1YiI6InRva2VuIiwiZXhwIjoxNTg3ODkzNzY0LCJpYXQiOjE1ODc4OTM3MDV9.1F75dmR5IvesSQhLmxaySRB8RnnnOvpzctnp--pG4w4";
         try {
             jwtUtil.parseToken(token);
         } catch (TokenException e) {

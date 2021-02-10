@@ -235,6 +235,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 // antMatchers 设置拦截的请求  hasAnyAuthority 对应的权限名称
                 // .hasAnyAuthority("PRODUCT_ADD") 用户所具有的权限
                 // 可替换成 .hasRole() 针对角色做验证
+//                .antMatchers("/product/add").hasRole("admin");
 //                .antMatchers("/product/add").hasAnyAuthority("PRODUCT_ADD")
 //                .antMatchers("/product/update").hasAnyAuthority("PRODUCT_UPDATE")
 //                .antMatchers("/product/list").hasAnyAuthority("PRODUCT_LIST")

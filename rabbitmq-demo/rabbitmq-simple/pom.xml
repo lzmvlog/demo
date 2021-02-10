@@ -12,6 +12,7 @@
     <artifactId>rabbitmq-simple</artifactId>
 
     <dependencies>
+        <!--amqp必要依赖-->
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
