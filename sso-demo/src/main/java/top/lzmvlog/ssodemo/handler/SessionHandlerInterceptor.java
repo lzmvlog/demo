@@ -10,6 +10,7 @@ import top.lzmvlog.ssodemo.controller.IndexController;
 import top.lzmvlog.ssodemo.dao.UserRepository;
 import top.lzmvlog.ssodemo.model.User;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,11 +48,16 @@ public class SessionHandlerInterceptor implements HandlerInterceptor {
         if (!"/index".equals(servletPath) || !"/".equals(servletPath)) {
             indexController.url = servletPath;
         }
-        String username = (String) request.getSession().getAttribute("username");
+        Cookie[] cookies = request.getCookies();
         boolean exists = false;
-        if (!StringUtils.isEmpty(username)) {
-            exists = userRepository.exists(Example.of(new User()
-                    .setUsername(username)));
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String value = cookie.getValue();
+                if (!StringUtils.isEmpty(value)) {
+                    exists = userRepository.exists(Example.of(new User()
+                            .setUsername(value)));
+                }
+            }
         }
         if (exists) {
             return true;

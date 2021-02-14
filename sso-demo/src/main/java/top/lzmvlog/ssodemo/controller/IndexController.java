@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import top.lzmvlog.ssodemo.dao.UserRepository;
 import top.lzmvlog.ssodemo.model.User;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ShaoJie zhang1591313226@163.com
@@ -43,20 +43,18 @@ public class IndexController {
      *
      * @param username 账号
      * @param password 密码
-     * @param request
+     * @param response
      * @return
      */
     @PostMapping("login")
-    public String login(String username, String password, HttpServletRequest request) {
+    public String login(String username, String password, HttpServletResponse response) {
         // 用户登录
         boolean exists = userRepository.exists(Example.of(new User()
                 .setUsername(username)
                 .setPassword(password)));
         if (exists) {
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            // 指定客户机请求之间的时间，以秒为单位，此时间间隔表示servlet容器使该会话无效。时间为零或负数表示会话永不超时。
-            session.setMaxInactiveInterval(7200);
+            Cookie cookie = new Cookie("username", username);
+            response.addCookie(cookie);
             if (StringUtils.isEmpty(url)) {
                 return "demo1";
             }
