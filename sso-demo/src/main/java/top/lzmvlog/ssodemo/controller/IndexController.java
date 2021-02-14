@@ -5,6 +5,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import top.lzmvlog.ssodemo.dao.UserRepository;
 import top.lzmvlog.ssodemo.model.User;
 
@@ -33,11 +34,19 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index1(HttpServletRequest request) {
+    public String index1() {
         return "index";
     }
 
-    @GetMapping("login")
+    /**
+     * 登录
+     *
+     * @param username 账号
+     * @param password 密码
+     * @param request
+     * @return
+     */
+    @PostMapping("login")
     public String login(String username, String password, HttpServletRequest request) {
         // 用户登录
         boolean exists = userRepository.exists(Example.of(new User()
@@ -56,35 +65,23 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * demo2
+     *
+     * @return
+     */
     @GetMapping("demo2")
     public String demo2() {
-//        // 用户登录
-//        boolean exists = userRepository.exists(Example.of(new User()
-//                .setUsername(username)
-//                .setPassword(password)));
-//        if (exists) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("username", username);
-//            // 指定客户机请求之间的时间，以秒为单位，此时间间隔表示servlet容器使该会话无效。时间为零或负数表示会话永不超时。
-//            session.setMaxInactiveInterval(7200);
-//            return "demo2";
-//        }
         return "demo2";
     }
 
+    /**
+     * demo1
+     *
+     * @return
+     */
     @GetMapping("demo1")
     public String demo1() {
-        // 用户登录
-//        boolean exists = userRepository.exists(Example.of(new User()
-//                .setUsername(username)
-//                .setPassword(password)));
-//        if (exists) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("username", username);
-//            // 指定客户机请求之间的时间，以秒为单位，此时间间隔表示servlet容器使该会话无效。时间为零或负数表示会话永不超时。
-//            session.setMaxInactiveInterval(7200);
-//            return "demo1";
-//        }
         return "demo1";
     }
 

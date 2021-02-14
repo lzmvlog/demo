@@ -1,4 +1,4 @@
-package top.lzmvlog.ssodemo.filter;
+package top.lzmvlog.ssodemo.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Description:
  */
 @Component
-public class CookieHandlerInterceptor implements HandlerInterceptor {
+public class SessionHandlerInterceptor implements HandlerInterceptor {
 
     @Autowired
     UserRepository userRepository;
