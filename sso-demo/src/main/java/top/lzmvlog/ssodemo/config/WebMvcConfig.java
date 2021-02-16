@@ -9,20 +9,21 @@ import top.lzmvlog.ssodemo.handler.SessionHandlerInterceptor;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-	/**
-	 * Session 拦截处理器
-	 */
-	@Autowired
-	private SessionHandlerInterceptor sessionHandlerInterceptor;
+    /**
+     * Session 拦截处理器
+     */
+    @Autowired
+    private SessionHandlerInterceptor sessionHandlerInterceptor;
 
-	/**
-	 * 添加拦截器
-	 * @param registry
-	 */
-	@Override
-	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(this.sessionHandlerInterceptor).addPathPatterns("/**");
-		super.addInterceptors(registry);
-	}
-	
+    /**
+     * 添加拦截器
+     *
+     * @param registry
+     */
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(this.sessionHandlerInterceptor).addPathPatterns("/**");
+        super.addInterceptors(registry);
+    }
+
 }

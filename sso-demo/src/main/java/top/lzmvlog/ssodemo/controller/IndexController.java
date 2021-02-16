@@ -28,18 +28,28 @@ public class IndexController {
      */
     public String url;
 
+    /**
+     * 登录界面
+     *
+     * @return
+     */
     @GetMapping("/index")
     public String index() {
         return "index";
     }
 
+    /**
+     * 登录界面
+     *
+     * @return
+     */
     @GetMapping("/")
     public String index1() {
         return "index";
     }
 
     /**
-     * 登录
+     * 登录请求接口
      *
      * @param username 账号
      * @param password 密码
@@ -64,7 +74,7 @@ public class IndexController {
     }
 
     /**
-     * demo2
+     * 跳转到 demo2
      *
      * @return
      */
@@ -74,7 +84,7 @@ public class IndexController {
     }
 
     /**
-     * demo1
+     * 跳转到  demo1
      *
      * @return
      */
